@@ -136,37 +136,39 @@ function Home() {
   }
 
   return (
-    <main className="bg-red-500 h-[100vh] w-screen flex flex-col items-center overflow-auto p-5">
+    <main className="bg-orange-50 h-[100vh] w-screen flex flex-col items-center overflow-auto p-5">
       {/* Input */}
-      <div className="flex justify-around w-[50vw]">
+      <div className="flex justify-around items-center space-x-6  w-[50vw]">
         <input
-          className="bg-white/70 px-4 mt-8 py-3 rounded-lg text-md text-black"
+          className="bg-white shadow-lg px-4 py-3 rounded-lg text-md text-orange-500"
           type="text"
           placeholder="Enter hall name"
           value={hallDetails.name}
           onChange={(e) => setHallDetails({ ...hallDetails, name: e.target.value })}
         />
         <input
-          className="bg-white/70 px-4 mt-8 py-3 rounded-lg text-md text-black"
+          className="bg-white shadow-lg px-4 py-3 rounded-lg text-md text-orange-500"
           type="number"
           placeholder="Hall size"
           value={hallDetails.size}
           onChange={(e) => setHallDetails({ ...hallDetails, size: e.target.value })}
         />
-        <button onClick={handleHallSubmit} className="bg-green-500 px-5 text-2xl rounded-md mt-5">
+        <div className="flex items-center space-x-6">
+          <button onClick={handleHallSubmit} className="bg-orange-500 shadow-lg px-5 text-xl text-white font-semibold py-2 rounded-md">
           Add
         </button>
-        <button onClick={exportExcel} className="bg-blue-500 px-5 text-2xl rounded-md mt-5">
-          Export Excel
+        <button onClick={exportExcel} className="bg-orange-50 border-2 border-orange-500 text-orange-500 border-b-4 border-b-orange-500 shadow-lg px-5 text-xl font-semibold py-2 rounded-md">
+          Export 
         </button>
+        </div>
       </div>
 
       {/* Classes */}
-      <div className="bg-white/10 pt-2 w-[80vw] h-[15vh] mt-10 flex justify-around flex-wrap gap-2">
+      <div className="bg-[#FFEBD2] pt-2 w-[80vw] px-5 rounded-md mt-10 flex justify-around items-center flex-wrap gap-2">
         {Object.entries(classes).map(([name, students]) => (
           <div
             key={name}
-            className="bg-red-900 w-28 h-20 text-white text-lg font-bold text-center box flex items-center justify-center cursor-pointer"
+            className="bg-orange-500 my-2 rounded-lg w-28 h-20 text-white text-lg font-bold text-center box flex items-center justify-center cursor-pointer"
             data-name={name}
           >
             {name} ({students.length})
@@ -180,7 +182,7 @@ function Home() {
           <div
             key={item.name}
             data-name={item.name}
-            className="hall w-60 h-60 bg-black text-white p-3 rounded-lg relative"
+            className="hall w-60 h-60 border-2 border-orange-400 bg-orange-100 text-orange-500 p-3 rounded-lg relative"
           >
             <h1 className="text-xl text-center font-bold">{item.name}</h1>
             <p className="text-center">Capacity: {item.size}</p>
