@@ -29,6 +29,7 @@ const ExcelReaderTailwind = () => {
       });
 
       setClassData(classObj);
+      console.log({classObj})
     };
 
     reader.readAsBinaryString(file);
