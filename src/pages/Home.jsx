@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react'
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Draggable } from "gsap/Draggable";
-
 gsap.registerPlugin(useGSAP,Draggable);
 function Home() {
 
   const [classes, setClasses] = useState({})
 
   const [hall, setHall] = useState([])
-
+  
+  
 
   const [hallDetails, setHallDetails] = useState({name: "", size: 0})
 

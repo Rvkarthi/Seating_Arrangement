@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as XLSX from "xlsx";
 
-const ExcelReaderTailwind = () => {
+const ExcelReaderTailwind = ({updatedClass}) => {
   const [classData, setClassData] = useState({});
   
   const handleFileUpload = (e) => {
@@ -56,7 +56,7 @@ const ExcelReaderTailwind = () => {
       />
       
       {Object.keys(classData).length > 0 && (
-        <div className="space-y-6">
+        <div className="flex gap-2 items-stretch">
           {Object.entries(classData).map(([className, students]) => (
             <div
               key={className}
@@ -66,16 +66,7 @@ const ExcelReaderTailwind = () => {
                 Class {className}
               </h3>
               <p className="text-gray-700 mb-2">Total Students: {students.length}</p>
-              <div className="flex flex-wrap gap-2">
-                {students.map((reg, index) => (
-                  <span
-                    key={index}
-                    className="bg-orange-200 text-orange-800 px-3 py-1 rounded-md text-sm cursor-pointer hover:bg-orange-300"
-                  >
-                    {reg}
-                  </span>
-                ))}
-              </div>
+             
             </div>
           ))}
         </div>
