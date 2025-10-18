@@ -12,7 +12,11 @@
   "dependencies": {
     "@gsap/react": "^2.1.2",
     "axios": "^1.12.2",
+<<<<<<< HEAD
     "file-saver": "^2.0.5",
+=======
+    "gsap": "^3.13.0",
+>>>>>>> 6773fcadcf885bd72c0a7422af0fd104195655b6
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.4",
