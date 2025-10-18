@@ -1,77 +1,73 @@
 import React, { useState } from "react";
 import * as XLSX from "xlsx";
 
-const ExcelReaderTailwind = ({updatedClass}) => {
+const ExcelReaderTailwind = ({ updatedClass }) => {
   const [classData, setClassData] = useState({});
   
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
+    if (!file) return;
+
     const reader = new FileReader();
 
     reader.onload = (event) => {
-      const binaryStr = event.target.result;
-      const workbook = XLSX.read(binaryStr, { type: "binary" });
+      try {
+        const binaryStr = event.target.result;
+        const workbook = XLSX.read(binaryStr, { type: "binary" });
 
-      const sheetName = workbook.SheetNames[0];
-      const sheet = workbook.Sheets[sheetName];
-      const data = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+        const sheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[sheetName];
+        const data = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
-      const headers = data[0];
-      const classObj = {};
-
-      headers.forEach((header, colIndex) => {
-        const students = [];
-        for (let row = 1; row < data.length; row++) {
-          const regNo = data[row][colIndex];
-          if (regNo) students.push(regNo);
+        if (data.length === 0) {
+          console.warn("Excel file is empty");
+          return;
         }
-        classObj[header] = students;
-      });
 
-      setClassData(classObj);
-      console.log({classObj})
+        const headers = data[0];
+        const classObj = {};
+
+        headers.forEach((header, colIndex) => {
+          const students = [];
+          for (let row = 1; row < data.length; row++) {
+            const regNo = data[row][colIndex];
+            if (regNo) students.push(regNo.toString());
+          }
+          classObj[header] = students;
+        });
+
+        setClassData(classObj);
+        console.log("Class data processed:", classObj);
+        
+        // Call the prop function to send data to parent
+        if (updatedClass) {
+          updatedClass(classObj);
+        }
+      } catch (error) {
+        console.error("Error processing Excel file:", error);
+      }
+    };
+
+    reader.onerror = () => {
+      console.error("Error reading file");
     };
 
     reader.readAsBinaryString(file);
   };
 
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") setShowJSON((prev) => !prev);
-  };
-
   return (
-    <div
-      className="min-h-screen bg-orange-50 p-6 font-sans"
-      tabIndex="0"
-      onKeyDown={handleKeyPress}
-    >
-      <h2 className="text-2xl font-bold text-orange-600 mb-4">
-        📘 Class-wise Student Data
+    <div className="w-full bg-orange-100 p-6 rounded-lg shadow-md mb-6 flex-col items-center justify-center">
+      <h2 className="text-2xl font-bold text-orange-600 mb-4 ">
+        📘 Upload Class-wise Student Data
       </h2>
 
       <input
         type="file"
         accept=".xlsx, .xls"
         onChange={handleFileUpload}
-        className="mb-4 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
+        className="mb-4 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 w-full max-w-md"
       />
       
-      {Object.keys(classData).length > 0 && (
-        <div className="flex gap-2 items-stretch">
-          {Object.entries(classData).map(([className, students]) => (
-            <div
-              key={className}
-              className="border-2 border-orange-400 rounded-xl p-4 bg-orange-50 shadow-md"
-            >
-              <h3 className="text-xl font-semibold text-orange-700 mb-2">
-                Class {className}
-              </h3>
-              <p className="text-gray-700 mb-2">Total Students: {students.length}</p>
-             
-            </div>
-          ))}
-        </div>
-      )}
     </div>
   );
 };
