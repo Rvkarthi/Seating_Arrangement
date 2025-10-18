@@ -41,7 +41,7 @@ const ExcelReaderTailwind = ({updatedClass}) => {
 
   return (
     <div
-      className="min-h-screen bg-gray-50 p-6 font-sans"
+      className="min-h-screen bg-gray-50 p-8 font-sans"
       tabIndex="0"
       onKeyDown={handleKeyPress}
     >
